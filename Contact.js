@@ -1,8 +1,4 @@
-/*
-UC8: Ability to search Person in a particular City or State
-*/
-
-class Contact {
+export class Contact {
     #firstName;
     #lastName;
     #address;
@@ -86,7 +82,7 @@ class Contact {
         Address: ${this.#address}, ${this.#city}, ${this.#state}, 
         Zip: ${this.#zip}, 
         Phone: ${this.#phoneNumber}, Email: ${this.#email} 
-        ::::::::::::::::::::::::::::::::::::::::`;
+        ------------------------------------`;
     }
 
     getFirstName() { return this.#firstName; }
@@ -142,141 +138,3 @@ class Contact {
     
 
 }
-
-class AddressBook {
-    #contacts = [];
-
-    addContact(contact) {
-        let duplicateExists = this.#contacts.find(c => 
-            c.getFirstName() === contact.getFirstName() && c.getLastName() === contact.getLastName()
-        );
-
-        if (duplicateExists) {
-            console.log("Duplicate Contact Found! Cannot add:", contact.getFirstName(), contact.getLastName());
-        } else {
-            this.#contacts.push(contact);
-            console.log("Contact Added Successfully:", contact.getFirstName(), contact.getLastName());
-        }
-    }
-
-    displayContacts() {
-        if (this.#contacts.length === 0) {
-            console.log("Address Book is empty.");
-        } else {
-            console.log("Address Book Contacts:");
-            this.#contacts.forEach(contact => console.log(contact.getDetails()));
-            
-        }
-       
-    }
-    
-    findContact(firstName, lastName) {
-        return this.#contacts.find(contact => contact.getFirstName() === firstName && contact.getLastName() === lastName);
-    }
-
-    // 🔹 UC4: Edit Contact by Name
-    editContact(firstName, lastName, updatedFields) {
-        let contact = this.findContact(firstName, lastName);
-        if (contact) {
-            contact.updateContact(updatedFields);
-            console.log(`Contact ${firstName} ${lastName} updated successfully.`);
-        } else {
-            console.log(`Contact ${firstName} ${lastName} not found.`);
-        }
-    }
-
-    deleteContact(firstName, lastName) {
-        const index = this.#contacts.findIndex(contact => 
-            contact.getFirstName() === firstName && contact.getLastName() === lastName
-        );
-    
-        if (index !== -1) {
-            this.#contacts.splice(index, 1);
-            console.log(`Contact ${firstName} ${lastName} deleted successfully.`);
-        } else {
-            console.log(`Contact ${firstName} ${lastName} not found.`);
-        }
-    }
-
-    getContactCount() {
-        return this.#contacts.reduce(count => count + 1, 0);
-    }
-
-    findByCity(city) {
-        let people = this.#contacts.filter(contact => contact.getCity() === city);
-        if (people.length === 0) {
-            console.log(`No contacts found in ${city}.`);
-        } else {
-            console.log(`Contacts in ${city}:`);
-            people.forEach(contact => console.log(contact.getDetails()));
-        }
-    }
-
-    findByState(state) {
-        let people = this.#contacts.filter(contact => contact.getState() === state);
-        if (people.length === 0) {
-            console.log(`No contacts found in ${state}.`);
-        } else {
-            console.log(`Contacts in ${state}:`);
-            people.forEach(contact => console.log(contact.getDetails()));
-        }
-    }
-    
-}
-
-let addressBook = new AddressBook();
-
-try {
-    
-    let contact1 = new Contact("John", "Doe", "123 Main St", "New York", "Bhopal", "100001", "1234567890", "john.doe@example.com");
-    let contact2 = new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "Canda", "900002", "9876543210", "alice.smith@example.com");
-
-    addressBook.addContact(contact1);
-    addressBook.addContact(contact2);
-    addressBook.addContact(contact1);
-
-    addressBook.displayContacts();
-    console.log("Number of Contacts:", addressBook.getContactCount());
-} 
-catch (error) 
-{
-    console.error(error.message);
-}
-
-
-try {
-    addressBook.editContact("John", "Doe", { address: "789 Park Ave", city: "Chicago" });
-
-    addressBook.displayContacts();
-
-} 
-catch (error) 
-{
-    console.error(error.message);
-}
-
-
-console.log("People in New York:", addressBook.findByCity('New York'));
-
-console.log("People in CA:", addressBook.findByState('Bhopal'));
-
-try {
-    addressBook.deleteContact("Alice", "Smith");
-
-    addressBook.displayContacts();
-
-}
-catch (error) 
-{
-    console.error(error.message);
-}
-try 
-{
-    let invalidContact = new Contact("jo", "Doe", "12", "NY", "NY", "12345", "9876543", "john.doe@");
-} catch (error) {
-    console.error(error.message);
-}
-
-
-
-console.log("Number of Contacts:", addressBook.getContactCount());

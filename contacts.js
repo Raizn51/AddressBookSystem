@@ -1,11 +1,5 @@
 /*
-UC3: Ability to create a New Address Book array and add new Contacts to it
-- Create an AddressBook class to store multiple contacts.
-- Each contact should have firstName, lastName, address, city, state, zip, phoneNumber, and email.
-- Use private fields to ensure encapsulation.
-- Validate input data using regular expressions.
-- Provide methods to add contacts to the AddressBook.
-- Throw an error if invalid data is entered.
+UC4: Ability to find existing contact person using their name and edit it
 */
 
 class Contact {
@@ -173,7 +167,7 @@ class AddressBook {
             contact.updateContact(updatedFields);
             console.log(`Contact ${firstName} ${lastName} updated successfully.`);
         } else {
-            console.log(`❌ Contact ${firstName} ${lastName} not found.`);
+            console.log(`Contact ${firstName} ${lastName} not found.`);
         }
 }
 }

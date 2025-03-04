@@ -105,29 +105,49 @@ export class AddressBook {
         });
     }
 
-viewByState() {
-    if (this.#contacts.length === 0) {
-        console.log("Address Book is empty.");
-        return;
-    }
-    
-    let stateMap = new Map();
-    
-    this.#contacts.forEach(contact => {
-        let state = contact.getState();
-        if (!stateMap.has(state)) {
-            stateMap.set(state, []);
+    viewByState() {
+        if (this.#contacts.length === 0) {
+            console.log("Address Book is empty.");
+            return;
         }
-        stateMap.get(state).push(contact.getDetails());
-    });
+        
+        let stateMap = new Map();
+        
+        this.#contacts.forEach(contact => {
+            let state = contact.getState();
+            if (!stateMap.has(state)) {
+                stateMap.set(state, []);
+            }
+            stateMap.get(state).push(contact.getDetails());
+        });
 
-    console.log("🔹 Persons Grouped by State:");
-    stateMap.forEach((contacts, state) => {
-        console.log(`${state}:`);
-        contacts.forEach(contact => console.log(contact));
-        console.log("------------------------------------");
-    });
-}
+        console.log("🔹 Persons Grouped by State:");
+        stateMap.forEach((contacts, state) => {
+            console.log(`${state}:`);
+            contacts.forEach(contact => console.log(contact));
+            console.log("------------------------------------");
+        });
+    }
 
-    
+
+    countByCity() {
+        let cityCount = this.#contacts.reduce((countMap, contact) => {
+            countMap[contact.getCity()] = (countMap[contact.getCity()] || 0) + 1;
+            return countMap;
+        }, {});
+
+        console.log("\n📊 Count of Contacts by Each City:", cityCount);
+        return cityCount;
+    }
+
+   
+    countByState() {
+        let stateCount = this.#contacts.reduce((countMap, contact) => {
+            countMap[contact.getState()] = (countMap[contact.getState()] || 0) + 1;
+            return countMap;
+        }, {});
+
+        console.log("\n📊 Count of Contacts by Each State:", stateCount);
+        return stateCount;
+    }
 }

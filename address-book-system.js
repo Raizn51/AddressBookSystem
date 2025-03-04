@@ -1,5 +1,5 @@
 /*
-UC9: Ability to view Persons by City or State
+UC10: Ability to get number of contact persons i.e. count by City or State
 */
 
 import { AddressBook } from './AddressBook.js';
@@ -79,3 +79,6 @@ console.log("Number of Contacts:", addressBook.getContactCount());
 
 addressBook.viewByCity();
 addressBook.viewByState();
+
+addressBook.countByCity();
+addressBook.countByState();

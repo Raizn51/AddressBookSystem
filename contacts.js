@@ -169,7 +169,21 @@ class AddressBook {
         } else {
             console.log(`Contact ${firstName} ${lastName} not found.`);
         }
-}
+    }
+
+    deleteContact(firstName, lastName) {
+        const index = this.#contacts.findIndex(contact => 
+            contact.getFirstName() === firstName && contact.getLastName() === lastName
+        );
+    
+        if (index !== -1) {
+            this.#contacts.splice(index, 1);
+            console.log(`Contact ${firstName} ${lastName} deleted successfully.`);
+        } else {
+            console.log(`Contact ${firstName} ${lastName} not found.`);
+        }
+    }
+    
 }
 
 let addressBook = new AddressBook();
@@ -201,7 +215,16 @@ catch (error)
     console.error(error.message);
 }
 
+try {
+    addressBook.deleteContact("Alice", "Smith");
 
+    addressBook.displayContacts();
+
+}
+catch (error) 
+{
+    console.error(error.message);
+}
 try 
 {
     let invalidContact = new Contact("jo", "Doe", "12", "NY", "NY", "12345", "9876543", "john.doe@");

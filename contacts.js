@@ -1,5 +1,5 @@
 /*
-UC4: Ability to find existing contact person using their name and edit it
+UC5: Ability to find a person with name delete it from the array
 */
 
 class Contact {
@@ -183,6 +183,10 @@ class AddressBook {
             console.log(`Contact ${firstName} ${lastName} not found.`);
         }
     }
+
+    getContactCount() {
+        return this.#contacts.reduce(count => count + 1, 0);
+    }
     
 }
 
@@ -197,6 +201,7 @@ try {
     addressBook.addContact(contact2);
 
     addressBook.displayContacts();
+    console.log("Number of Contacts:", addressBook.getContactCount());
 } 
 catch (error) 
 {
@@ -231,3 +236,7 @@ try
 } catch (error) {
     console.error(error.message);
 }
+
+
+
+console.log("Number of Contacts:", addressBook.getContactCount());

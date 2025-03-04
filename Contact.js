@@ -89,6 +89,8 @@ export class Contact {
     getLastName() { return this.#lastName; }
     getCity() { return this.#city; }
     getState() { return this.#state; }
+    getZip() { return this.#zip; }
+
 
 
     updateContact(updatedFields)

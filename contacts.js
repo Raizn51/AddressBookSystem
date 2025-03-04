@@ -39,7 +39,6 @@ class Contact {
         this.#email = email;
     }
 
-    // Validation Methods
     #validateFirstName(name) {
         if (!/^[A-Z][a-zA-Z]{2,}$/.test(name)) {
             throw new Error("Invalid First Name! Must start with a capital letter and have at least 3 characters.");
@@ -95,6 +94,54 @@ class Contact {
         Phone: ${this.#phoneNumber}, Email: ${this.#email} 
         ::::::::::::::::::::::::::::::::::::::::`;
     }
+
+    getFirstName() { return this.#firstName; }
+    getLastName() { return this.#lastName; }
+
+    updateContact(updatedFields)
+    {
+        for (const key in updatedFields) 
+            {
+            switch (key) 
+            {
+                case "firstName":
+                    this.#validateFirstName(updatedFields[key]);
+                    this.#firstName = updatedFields[key];
+                    break;
+                case "lastName":
+                    this.#validateLastName(updatedFields[key]);
+                    this.#lastName = updatedFields[key];
+                    break;
+                case "address":
+                    this.#validateAddress(updatedFields[key]);
+                    this.#address = updatedFields[key];
+                    break;
+                case "city":
+                    this.#validateCity(updatedFields[key]);
+                    this.#city = updatedFields[key];
+                    break;
+                case "state":
+                    this.#validateState(updatedFields[key]);
+                    this.#state = updatedFields[key];
+                    break;
+                case "zip":
+                    this.#validateZip(updatedFields[key]);
+                    this.#zip = updatedFields[key];
+                    break;
+                case "phoneNumber":
+                    this.#validatePhoneNumber(updatedFields[key]);
+                    this.#phoneNumber = updatedFields[key];
+                    break;
+                case "email":
+                    this.#validateEmail(updatedFields[key]);
+                    this.#email = updatedFields[key];
+                    break;
+                default:
+                    console.log("Cannot update field: ${key}");
+            }
+        }
+    }
+
 }
 
 class AddressBook {
@@ -114,11 +161,27 @@ class AddressBook {
         }
        
     }
+    
+    findContact(firstName, lastName) {
+        return this.#contacts.find(contact => contact.getFirstName() === firstName && contact.getLastName() === lastName);
+    }
+
+    // 🔹 UC4: Edit Contact by Name
+    editContact(firstName, lastName, updatedFields) {
+        let contact = this.findContact(firstName, lastName);
+        if (contact) {
+            contact.updateContact(updatedFields);
+            console.log(`Contact ${firstName} ${lastName} updated successfully.`);
+        } else {
+            console.log(`❌ Contact ${firstName} ${lastName} not found.`);
+        }
+}
 }
 
+let addressBook = new AddressBook();
 
 try {
-    let addressBook = new AddressBook();
+    
     let contact1 = new Contact("John", "Doe", "123 Main St", "New York", "Bhopal", "100001", "1234567890", "john.doe@example.com");
     let contact2 = new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "Canda", "900002", "9876543210", "alice.smith@example.com");
 
@@ -126,6 +189,18 @@ try {
     addressBook.addContact(contact2);
 
     addressBook.displayContacts();
+} 
+catch (error) 
+{
+    console.error(error.message);
+}
+
+
+try {
+    addressBook.editContact("John", "Doe", { address: "789 Park Ave", city: "Chicago" });
+
+    addressBook.displayContacts();
+
 } 
 catch (error) 
 {

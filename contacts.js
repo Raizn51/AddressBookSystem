@@ -1,9 +1,11 @@
 /*
-UC2: Ability to ensure valid contacts are added.
-- First Name and Last Name should start with a capital letter and have a minimum of 3 characters.
-- Address, City, and State should have a minimum of 4 characters.
-- Zip, Phone Number, and Email should be validated using regex.
-- Throw an error if validation fails.
+UC3: Ability to create a New Address Book array and add new Contacts to it
+- Create an AddressBook class to store multiple contacts.
+- Each contact should have firstName, lastName, address, city, state, zip, phoneNumber, and email.
+- Use private fields to ensure encapsulation.
+- Validate input data using regular expressions.
+- Provide methods to add contacts to the AddressBook.
+- Throw an error if invalid data is entered.
 */
 
 class Contact {
@@ -17,21 +19,15 @@ class Contact {
     #email;
 
     constructor(firstName, lastName, address, city, state, zip, phoneNumber, email) {
-        if (!this.#validateName(firstName) || !this.#validateName(lastName)) {
-            throw new Error("First Name and Last Name must start with a capital letter and have at least 3 characters.");
-        }
-        if (!this.#validateAddress(address) || !this.#validateAddress(city) || !this.#validateAddress(state)) {
-            throw new Error("Address, City, and State must have at least 4 characters.");
-        }
-        if (!this.#validateZip(zip)) {
-            throw new Error("Invalid Zip Code.");
-        }
-        if (!this.#validatePhone(phoneNumber)) {
-            throw new Error("Invalid Phone Number.");
-        }
-        if (!this.#validateEmail(email)) {
-            throw new Error("Invalid Email Address.");
-        }
+        // Validate all inputs before assigning
+        this.#validateFirstName(firstName);
+        this.#validateLastName(lastName);
+        this.#validateAddress(address);
+        this.#validateCity(city);
+        this.#validateState(state);
+        this.#validateZip(zip);
+        this.#validatePhoneNumber(phoneNumber);
+        this.#validateEmail(email);
 
         this.#firstName = firstName;
         this.#lastName = lastName;
@@ -43,56 +39,103 @@ class Contact {
         this.#email = email;
     }
 
-    #validateName(name) {
-        return /^[A-Z][a-zA-Z]{2,}$/.test(name);
+    // Validation Methods
+    #validateFirstName(name) {
+        if (!/^[A-Z][a-zA-Z]{2,}$/.test(name)) {
+            throw new Error("Invalid First Name! Must start with a capital letter and have at least 3 characters.");
+        }
+    }
+
+    #validateLastName(name) {
+        if (!/^[A-Z][a-zA-Z]{2,}$/.test(name)) {
+            throw new Error("Invalid Last Name! Must start with a capital letter and have at least 3 characters.");
+        }
     }
 
     #validateAddress(address) {
-        return /^[a-zA-Z0-9\s]{4,}$/.test(address);
+        if (!/^[a-zA-Z0-9\s]{4,}$/.test(address)) {
+            throw new Error("Invalid Address! Must have at least 4 characters.");
+        }
+    }
+
+    #validateCity(city) {
+        if (!/^[a-zA-Z\s]{4,}$/.test(city)) {
+            throw new Error("Invalid City! Must have at least 4 characters.");
+        }
+    }
+
+    #validateState(state) {
+        if (!/^[a-zA-Z\s]{4,}$/.test(state)) {
+            throw new Error("Invalid State! Must have at least 4 characters.");
+        }
     }
 
     #validateZip(zip) {
-        return /^[1-9][0-9]{5}$/.test(zip);
+        if (!/^\d{6}$/.test(zip)) {
+            throw new Error("Invalid Zip! Must be a 6-digit number.");
+        }
     }
 
-    #validatePhone(phone) {
-        return /^[7-9][0-9]{9}$/.test(phone);
+    #validatePhoneNumber(phone) {
+        if (!/^\d{10}$/.test(phone)) {
+            throw new Error("Invalid Phone Number! Must be a 10-digit number.");
+        }
     }
 
     #validateEmail(email) {
-        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            throw new Error("Invalid Email! Must be in a valid format (e.g., abc@domain.com).");
+        }
     }
 
-    displayContact() {
-        console.log(`Name: ${this.#firstName} ${this.#lastName}`);
-        console.log(`Address: ${this.#address}, ${this.#city}, ${this.#state} - ${this.#zip}`);
-        console.log(`Phone: ${this.#phoneNumber}, Email: ${this.#email}`);
+    getDetails() {
+        return `        Name: ${this.#firstName} ${this.#lastName}, 
+        Address: ${this.#address}, ${this.#city}, ${this.#state}, 
+        Zip: ${this.#zip}, 
+        Phone: ${this.#phoneNumber}, Email: ${this.#email} 
+        ::::::::::::::::::::::::::::::::::::::::`;
+    }
+}
+
+class AddressBook {
+    #contacts = [];
+
+    addContact(contact) {
+        this.#contacts.push(contact);
+    }
+
+    displayContacts() {
+        if (this.#contacts.length === 0) {
+            console.log("Address Book is empty.");
+        } else {
+            console.log("Address Book Contacts:");
+            this.#contacts.forEach(contact => console.log(contact.getDetails()));
+            
+        }
+       
     }
 }
 
 
 try {
-    let contact2 = new Contact("John", "Doe", "123 Street", "New York", "Bhopal", "100001", "9876543210", "john.doe@example.com");
-    contact2.displayContact();
-} catch (error) {
+    let addressBook = new AddressBook();
+    let contact1 = new Contact("John", "Doe", "123 Main St", "New York", "Bhopal", "100001", "1234567890", "john.doe@example.com");
+    let contact2 = new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "Canda", "900002", "9876543210", "alice.smith@example.com");
+
+    addressBook.addContact(contact1);
+    addressBook.addContact(contact2);
+
+    addressBook.displayContacts();
+} 
+catch (error) 
+{
     console.error(error.message);
 }
 
-console.error(":::::::::::::::::::::::::::::::::::::");
 
-
-try {
-    let contact2 = new Contact("John", "Doe", "123 Street", "New York", "NY", "100001", "9876543210", "john.doe@example.com");
-    contact2.displayContact();
+try 
+{
+    let invalidContact = new Contact("jo", "Doe", "12", "NY", "NY", "12345", "9876543", "john.doe@");
 } catch (error) {
     console.error(error.message);
 }
-console.error(":::::::::::::::::::::::::::::::::::::");
-
-
-try {
-    let invalidContact = new Contact("jo", "doe", "12 St", "NY", "NY", "1000", "12345678", "john.doe@com");
-} catch (error) {
-    console.error(error.message);
-}
-

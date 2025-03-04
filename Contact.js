@@ -92,7 +92,6 @@ export class Contact {
     getZip() { return this.#zip; }
 
 
-
     updateContact(updatedFields)
     {
         for (const key in updatedFields) 

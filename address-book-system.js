@@ -83,3 +83,12 @@ addressBook.viewByState();
 addressBook.countByCity();
 addressBook.countByState();
 
+<<<<<<< HEAD
+=======
+addressBook.sortByName();
+
+
+addressBook.sortBy("city");
+addressBook.sortBy("state"); 
+addressBook.sortBy("zip");
+>>>>>>> UC12

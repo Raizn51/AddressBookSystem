@@ -157,17 +157,5 @@ export class AddressBook {
         this.displayContacts();
     }
 
-    sortBy(field) {
-        const validFields = ["city", "state", "zip"];
-        
-        if (!validFields.includes(field)) {
-            console.log("Invalid sorting field. Choose from 'city', 'state', or 'zip'.");
-            return;
-        }
-    
-        this.#contacts.sort((a, b) => a[`get${field.charAt(0).toUpperCase() + field.slice(1)}`]().localeCompare(b[`get${field.charAt(0).toUpperCase() + field.slice(1)}`]()));
-    
-        console.log(`Contacts Sorted by ${field.charAt(0).toUpperCase() + field.slice(1)}:`);
-        this.displayContacts();
-    }
+
 }

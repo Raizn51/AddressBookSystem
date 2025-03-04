@@ -137,9 +137,6 @@ export class Contact {
         }
     }
 
-    toString() {
-        return `🔹 Name: ${this.firstName} ${this.lastName}, Address: ${this.address}, ${this.city}, ${this.state}, Zip: ${this.zip}, Phone: ${this.phoneNumber}, Email: ${this.email}`;
-    }
     
 
 }

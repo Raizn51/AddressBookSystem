@@ -1,5 +1,5 @@
 /*
-UC7: Ability to ensure there is no Duplicate Entry of the same Person in the Address Book
+UC8: Ability to search Person in a particular City or State
 */
 
 class Contact {
@@ -91,6 +91,9 @@ class Contact {
 
     getFirstName() { return this.#firstName; }
     getLastName() { return this.#lastName; }
+    getCity() { return this.#city; }
+    getState() { return this.#state; }
+
 
     updateContact(updatedFields)
     {
@@ -135,6 +138,8 @@ class Contact {
             }
         }
     }
+
+    
 
 }
 
@@ -196,6 +201,26 @@ class AddressBook {
     getContactCount() {
         return this.#contacts.reduce(count => count + 1, 0);
     }
+
+    findByCity(city) {
+        let people = this.#contacts.filter(contact => contact.getCity() === city);
+        if (people.length === 0) {
+            console.log(`No contacts found in ${city}.`);
+        } else {
+            console.log(`Contacts in ${city}:`);
+            people.forEach(contact => console.log(contact.getDetails()));
+        }
+    }
+
+    findByState(state) {
+        let people = this.#contacts.filter(contact => contact.getState() === state);
+        if (people.length === 0) {
+            console.log(`No contacts found in ${state}.`);
+        } else {
+            console.log(`Contacts in ${state}:`);
+            people.forEach(contact => console.log(contact.getDetails()));
+        }
+    }
     
 }
 
@@ -229,6 +254,11 @@ catch (error)
 {
     console.error(error.message);
 }
+
+
+console.log("People in New York:", addressBook.findByCity('New York'));
+
+console.log("People in CA:", addressBook.findByState('Bhopal'));
 
 try {
     addressBook.deleteContact("Alice", "Smith");

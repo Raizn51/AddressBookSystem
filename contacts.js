@@ -1,5 +1,5 @@
 /*
-UC5: Ability to find a person with name delete it from the array
+UC7: Ability to ensure there is no Duplicate Entry of the same Person in the Address Book
 */
 
 class Contact {
@@ -142,7 +142,16 @@ class AddressBook {
     #contacts = [];
 
     addContact(contact) {
-        this.#contacts.push(contact);
+        let duplicateExists = this.#contacts.find(c => 
+            c.getFirstName() === contact.getFirstName() && c.getLastName() === contact.getLastName()
+        );
+
+        if (duplicateExists) {
+            console.log("Duplicate Contact Found! Cannot add:", contact.getFirstName(), contact.getLastName());
+        } else {
+            this.#contacts.push(contact);
+            console.log("Contact Added Successfully:", contact.getFirstName(), contact.getLastName());
+        }
     }
 
     displayContacts() {
@@ -199,6 +208,7 @@ try {
 
     addressBook.addContact(contact1);
     addressBook.addContact(contact2);
+    addressBook.addContact(contact1);
 
     addressBook.displayContacts();
     console.log("Number of Contacts:", addressBook.getContactCount());

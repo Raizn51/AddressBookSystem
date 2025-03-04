@@ -150,4 +150,10 @@ export class AddressBook {
         console.log("\n📊 Count of Contacts by Each State:", stateCount);
         return stateCount;
     }
+
+    sortByName() {
+        this.#contacts.sort((a, b) => a.getFirstName().localeCompare(b.getFirstName()));
+        console.log("Contacts Sorted Alphabetically by Name:");
+        this.displayContacts();
+    }
 }

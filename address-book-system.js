@@ -1,5 +1,5 @@
 /*
-UC10: Ability to get number of contact persons i.e. count by City or State
+UC11: Ability to sort the entries in the address book alphabetically by Person’s name
 */
 
 import { AddressBook } from './AddressBook.js';
@@ -82,3 +82,5 @@ addressBook.viewByState();
 
 addressBook.countByCity();
 addressBook.countByState();
+
+addressBook.sortByName();

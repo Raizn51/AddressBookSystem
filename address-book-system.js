@@ -84,3 +84,8 @@ addressBook.countByCity();
 addressBook.countByState();
 
 addressBook.sortByName();
+
+
+addressBook.sortBy("city");
+addressBook.sortBy("state"); 
+addressBook.sortBy("zip");

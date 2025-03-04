@@ -1,5 +1,5 @@
 /*
-UC11: Ability to sort the entries in the address book alphabetically by Person’s name
+UC12: Ability to sort the entries in the address book by City, State, or Zip
 */
 
 import { AddressBook } from './AddressBook.js';
@@ -83,12 +83,9 @@ addressBook.viewByState();
 addressBook.countByCity();
 addressBook.countByState();
 
-<<<<<<< HEAD
-=======
 addressBook.sortByName();
 
 
 addressBook.sortBy("city");
 addressBook.sortBy("state"); 
 addressBook.sortBy("zip");
->>>>>>> UC12
